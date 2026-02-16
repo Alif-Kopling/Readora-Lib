@@ -1,9 +1,7 @@
+import AppRoutes from "./router/AppRoutes";
+
 function App() {
-  return (
-    <div>
-      <h1>Library App Structure Ready</h1>
-    </div>
-  )
+  return <AppRoutes />;
 }
 
-export default App
+export default App;
