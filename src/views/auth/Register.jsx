@@ -27,27 +27,11 @@ export default function Register() {
     };
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-50">
+        <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-[radial-gradient(ellipse_at_top_left,_var(--color-purple-100),_transparent),_radial-gradient(ellipse_at_bottom_right,_var(--color-blue-100),_transparent)]">
             {/* Background decorative elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <motion.div
-                    className="absolute -top-40 -left-40 w-80 h-80 bg-purple-200 rounded-full opacity-20 blur-3xl"
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        x: [0, 50, 0],
-                        y: [0, 30, 0],
-                    }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <motion.div
-                    className="absolute -bottom-40 -right-40 w-96 h-96 bg-blue-200 rounded-full opacity-20 blur-3xl"
-                    animate={{
-                        scale: [1, 1.3, 1],
-                        x: [0, -50, 0],
-                        y: [0, -30, 0],
-                    }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                />
+                <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-400/20 blur-[120px] rounded-full animate-float" />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-400/20 blur-[120px] rounded-full animate-float" style={{ animationDelay: '-3s' }} />
             </div>
 
             {/* Left side - Image section for PC */}
@@ -121,39 +105,25 @@ export default function Register() {
             {/* Right side - Register form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-4">
                 <motion.div
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="w-full max-w-md"
+                    initial={{ scale: 0.95, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="w-full max-w-md animate-fade-in-up"
                 >
-                    <Card className="shadow-2xl border-0 backdrop-blur-sm bg-white/80">
+                    <Card className="shadow-premium border-white/40 glass">
                         <CardHeader className="space-y-3 text-center pb-6">
-                            <motion.div
-                                initial={{ scale: 0, rotate: -180 }}
-                                animate={{ scale: 1, rotate: 0 }}
-                                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                            >
-                                <div className="mx-auto w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg relative">
-                                    <UserPlus className="w-10 h-10 text-white" />
-                                    <motion.div
-                                        className="absolute -top-1 -right-1"
-                                        animate={{ rotate: [0, 10, -10, 0] }}
-                                        transition={{ duration: 2, repeat: Infinity }}
-                                    >
-                                        <Sparkles className="w-5 h-5 text-yellow-400" />
-                                    </motion.div>
+                            <div className="mx-auto w-20 h-20 bg-linear-to-br from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg relative group transition-transform hover:scale-110 duration-300">
+                                <UserPlus className="w-10 h-10 text-white" />
+                                <div className="absolute -top-1 -right-1 group-hover:rotate-12 transition-transform">
+                                    <Sparkles className="w-5 h-5 text-yellow-400" />
                                 </div>
-                            </motion.div>
-                            <motion.div
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                            >
-                                <CardTitle className="text-4xl bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                                    Student Registration
+                            </div>
+                            <div className="animate-scale-in">
+                                <CardTitle className="text-4xl font-bold bg-linear-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                                    Join Us
                                 </CardTitle>
-                                <CardDescription className="text-base mt-2">Create your account to access the library</CardDescription>
-                            </motion.div>
+                                <CardDescription className="text-base mt-2 font-medium">Create your account to access the library</CardDescription>
+                            </div>
                         </CardHeader>
                         <CardContent>
                             <motion.div
@@ -231,20 +201,20 @@ export default function Register() {
                                     </div>
                                 </div>
 
-                                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
                                     <Button
-                                        className="w-full bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700 rounded-lg mt-2 shadow-lg"
+                                        className="w-full bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl py-6 shadow-lg shadow-purple-200 transition-all duration-300 font-semibold text-lg"
                                         onClick={handleRegister}
                                     >
-                                        Register
+                                        Register Now
                                     </Button>
                                 </motion.div>
 
                                 <Link to="/">
-                                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                    <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
                                         <Button
                                             variant="outline"
-                                            className="w-full rounded-lg mt-2 border-2 hover:border-purple-500 transition-all"
+                                            className="w-full rounded-xl py-6 border-2 hover:bg-white/50 transition-all font-medium"
                                         >
                                             <ArrowLeft className="w-4 h-4 mr-2" />
                                             Back to Login
