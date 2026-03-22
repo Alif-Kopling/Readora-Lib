@@ -1,73 +1,122 @@
-# React + TypeScript + Vite
+# 📚 Perpustakaan Management System (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web-based library management system built using **React + TypeScript + Tailwind CSS**.
+This project is developed as part of a group assignment to create a digital library application with role-based access (Admin & Student).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+### 🔐 Authentication
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* Login with role selection (Admin / Student)
+* Register new member account
+* Basic validation for user input
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 👨‍💼 Admin
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* Manage books (CRUD)
+* Manage members
+* View and handle transactions
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 👨‍🎓 Student
+
+* Borrow books
+* Return books
+* View available books
+
+---
+
+## 🛠️ Tech Stack
+
+* ⚛️ React (Vite)
+* 🟦 TypeScript
+* 🎨 Tailwind CSS
+* 🌐 React Router DOM
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── assets/
+├── components/
+├── pages/
+│   ├── auth/
+│   │   ├── Login.tsx
+│   │   └── Register.tsx
+├── routes/
+├── services/
+├── types/
+├── App.tsx
+├── main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚙️ Installation
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Alif-Kopling/perpustakaan_menegement_FE.git
 ```
+
+2. Navigate to project folder:
+
+```bash
+cd perpustakaan_menegement_FE
+```
+
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+4. Run development server:
+
+```bash
+npm run dev
+```
+
+---
+
+## 🌐 Usage
+
+* Open browser:
+
+```
+http://localhost:5173/
+```
+
+* Login using Admin or Student role
+* Register if you don’t have an account
+* Access features based on your role
+
+---
+
+## 🎯 Goals
+
+* Build a clean and responsive UI
+* Implement authentication flow (Login & Register)
+* Practice frontend architecture using React & TypeScript
+* Integrate with backend API
+
+---
+
+## 📌 Status
+
+🚧 Currently in development (Development Branch)
+
+---
+
+## ✨ Author
+
+Developed by **Alif & Vio**
+
