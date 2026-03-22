@@ -19,27 +19,11 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-50">
+        <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-[radial-gradient(ellipse_at_top_left,_var(--color-blue-100),_transparent),_radial-gradient(ellipse_at_bottom_right,_var(--color-purple-100),_transparent)]">
             {/* Background decorative elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <motion.div
-                    className="absolute -top-40 -left-40 w-80 h-80 bg-blue-200 rounded-full opacity-20 blur-3xl"
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        x: [0, 50, 0],
-                        y: [0, 30, 0],
-                    }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <motion.div
-                    className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-200 rounded-full opacity-20 blur-3xl"
-                    animate={{
-                        scale: [1, 1.3, 1],
-                        x: [0, -50, 0],
-                        y: [0, -30, 0],
-                    }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                />
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-400/20 blur-[120px] rounded-full animate-float" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-400/20 blur-[120px] rounded-full animate-float" style={{ animationDelay: '-3s' }} />
             </div>
 
             {/* Left side - Image section for PC */}
@@ -72,7 +56,7 @@ export default function Login() {
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.5 }}
                     >
-                        Library Management System
+                        B.O.K.E.P
                     </motion.h1>
                     <motion.p
                         className="text-xl text-blue-100 text-center max-w-md"
@@ -80,7 +64,7 @@ export default function Login() {
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.7 }}
                     >
-                        Your gateway to endless knowledge and learning resources
+                        Book Operation & Knowledge Education Portal
                     </motion.p>
                     <motion.div
                         className="flex gap-8 mt-12"
@@ -107,50 +91,36 @@ export default function Login() {
             {/* Right side - Login form */}
             <div className="w-full lg:w-1/2 flex items-center justify-center p-4">
                 <motion.div
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="w-full max-w-md"
+                    initial={{ scale: 0.95, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="w-full max-w-md animate-fade-in-up"
                 >
-                    <Card className="shadow-2xl border-0 backdrop-blur-sm bg-white/80">
+                    <Card className="shadow-premium border-white/40 glass">
                         <CardHeader className="space-y-3 text-center pb-6">
-                            <motion.div
-                                initial={{ scale: 0, rotate: -180 }}
-                                animate={{ scale: 1, rotate: 0 }}
-                                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                            >
-                                <div className="mx-auto w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg relative">
-                                    <BookOpen className="w-10 h-10 text-white" />
-                                    <motion.div
-                                        className="absolute -top-1 -right-1"
-                                        animate={{ rotate: [0, 10, -10, 0] }}
-                                        transition={{ duration: 2, repeat: Infinity }}
-                                    >
-                                        <Sparkles className="w-5 h-5 text-yellow-400" />
-                                    </motion.div>
+                            <div className="mx-auto w-20 h-20 bg-linear-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg relative group transition-transform hover:scale-110 duration-300">
+                                <BookOpen className="w-10 h-10 text-white" />
+                                <div className="absolute -top-1 -right-1 group-hover:rotate-12 transition-transform">
+                                    <Sparkles className="w-5 h-5 text-yellow-400" />
                                 </div>
-                            </motion.div>
-                            <motion.div
-                                initial={{ y: 20, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                            >
-                                <CardTitle className="text-4xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                                    Library System
+                            </div>
+                            <div className="animate-scale-in">
+                                <CardTitle className="text-4xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                                    Login
                                 </CardTitle>
-                                <CardDescription className="text-base mt-2">Welcome back! Please login to continue</CardDescription>
-                            </motion.div>
+                                <CardDescription className="text-base mt-2 font-medium">Welcome back! Please login to continue</CardDescription>
+                            </div>
                         </CardHeader>
                         <CardContent>
                             <Tabs defaultValue="student" className="w-full">
-                                <TabsList className="grid w-full grid-cols-2 mb-6 bg-blue-50/50">
-                                    <TabsTrigger value="admin" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
+                                <TabsList className="grid w-full grid-cols-2 mb-6 bg-blue-50/50 p-1 rounded-xl">
+                                    <TabsTrigger value="admin" className="rounded-lg data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300">
                                         <GraduationCap className="w-4 h-4 mr-2" />
-                                        Admin Login
+                                        Admin
                                     </TabsTrigger>
-                                    <TabsTrigger value="student" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
+                                    <TabsTrigger value="student" className="rounded-lg data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300">
                                         <Book className="w-4 h-4 mr-2" />
-                                        Student Login
+                                        Student
                                     </TabsTrigger>
                                 </TabsList>
 
@@ -192,12 +162,12 @@ export default function Login() {
                                                 </button>
                                             </div>
                                         </div>
-                                        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                        <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
                                             <Button
-                                                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg mt-2 shadow-lg"
+                                                className="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl py-6 shadow-lg shadow-blue-200 transition-all duration-300 font-semibold text-lg"
                                                 onClick={() => handleLogin("admin")}
                                             >
-                                                Login as Admin
+                                                Sign In as Admin
                                             </Button>
                                         </motion.div>
                                     </motion.div>
@@ -241,12 +211,12 @@ export default function Login() {
                                                 </button>
                                             </div>
                                         </div>
-                                        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                        <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
                                             <Button
-                                                className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-lg mt-2 shadow-lg"
+                                                className="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl py-6 shadow-lg shadow-blue-200 transition-all duration-300 font-semibold text-lg"
                                                 onClick={() => handleLogin("student")}
                                             >
-                                                Login as Student
+                                                Sign In as Student
                                             </Button>
                                         </motion.div>
                                     </motion.div>
