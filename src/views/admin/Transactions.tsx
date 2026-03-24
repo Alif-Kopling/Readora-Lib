@@ -1,14 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Layout } from '../../components/layout/Layout';
 import { Calendar, User, BookOpen } from 'lucide-react';
-import { mockTransactions } from '../../services/mockData';
 import { mockNotifications } from '../../services/notificationService';
 import { NotificationPanel } from '../../components/notifications/NotificationPanel';
 import { motion } from 'motion/react';
+import { toast } from 'sonner';
+import usePerpustakaanStore from '../../stores/perpustakaan';
 
 export function Transactions() {
   const [notifications, setNotifications] = useState(mockNotifications);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  const {
+    transaksi: transactions,
+    loading,
+    fetchTransaksi,
+    updateTransaksi,
+    deleteTransaksi,
+  } = usePerpustakaanStore();
+
+  // Fetch transactions on mount
+  useEffect(() => {
+    fetchTransaksi();
+  }, []);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -22,6 +36,28 @@ export function Transactions() {
 
   const handleDeleteNotification = (id: string) => {
     setNotifications(notifications.filter((n) => n.id !== id));
+  };
+
+  const handleReturnBook = async (id: string) => {
+    if (confirm('Confirm returning this book?')) {
+      try {
+        await updateTransaksi(id, 0);
+        toast.success('Book returned successfully');
+      } catch (error) {
+        toast.error('Failed to return book. Please try again.');
+      }
+    }
+  };
+
+  const handleDeleteTransaction = async (id: string) => {
+    if (confirm('Are you sure you want to delete this transaction?')) {
+      try {
+        await deleteTransaksi(id);
+        toast.success('Transaction deleted successfully');
+      } catch (error) {
+        toast.error('Failed to delete transaction. Please try again.');
+      }
+    }
   };
 
   return (
@@ -49,7 +85,7 @@ export function Transactions() {
             className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
           >
             <p className="text-sm text-gray-600">Total Transactions</p>
-            <p className="text-2xl font-bold text-gray-900">{mockTransactions.length}</p>
+            <p className="text-2xl font-bold text-gray-900">{transactions.length}</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -59,7 +95,7 @@ export function Transactions() {
           >
             <p className="text-sm text-gray-600">Borrowed</p>
             <p className="text-2xl font-bold text-blue-600">
-              {mockTransactions.filter((t) => t.status === 'Borrowed').length}
+              {transactions.filter((t) => t.status === 'Borrowed').length}
             </p>
           </motion.div>
           <motion.div
@@ -70,7 +106,7 @@ export function Transactions() {
           >
             <p className="text-sm text-gray-600">Returned</p>
             <p className="text-2xl font-bold text-green-600">
-              {mockTransactions.filter((t) => t.status === 'Returned').length}
+              {transactions.filter((t) => t.status === 'Returned').length}
             </p>
           </motion.div>
           <motion.div
@@ -81,7 +117,7 @@ export function Transactions() {
           >
             <p className="text-sm text-gray-600">Overdue</p>
             <p className="text-2xl font-bold text-red-600">
-              {mockTransactions.filter((t) => t.status === 'Overdue').length}
+              {transactions.filter((t) => t.status === 'Overdue').length}
             </p>
           </motion.div>
         </div>
@@ -112,10 +148,13 @@ export function Transactions() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {mockTransactions.map((transaction, index) => (
+                {transactions.map((transaction, index) => (
                   <motion.tr
                     key={transaction.id}
                     initial={{ opacity: 0, x: -20 }}
@@ -170,11 +209,34 @@ export function Transactions() {
                         {transaction.status}
                       </span>
                     </td>
+                    <td className="px-6 py-4 text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        {transaction.status !== 'Returned' && (
+                          <button
+                            onClick={() => handleReturnBook(transaction.id)}
+                            className="px-3 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                          >
+                            Return
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleDeleteTransaction(transaction.id)}
+                          className="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
                   </motion.tr>
                 ))}
               </tbody>
             </table>
           </div>
+          {transactions.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-500">No transactions found</p>
+            </div>
+          )}
         </motion.div>
       </Layout>
 

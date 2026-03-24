@@ -8,6 +8,7 @@ import { BooksManagement } from "../views/admin/Transaksi/BooksManagement";
 import { MembersManagement } from "../views/admin/MembersManagement";
 import { Transactions } from "../views/admin/Transactions";
 import { Settings } from "../views/admin/Settings";
+import { StudentDashboard } from "../views/student/Dashboard";
 
 function RequireAdmin({ children }) {
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -18,6 +19,21 @@ function RequireAdmin({ children }) {
     }
 
     if (role !== "admin") {
+        return <Navigate to="/" replace />;
+    }
+
+    return children;
+}
+
+function RequireStudent({ children }) {
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+    const role = useAuthStore((state) => state.role);
+
+    if (!isAuthenticated) {
+        return <Navigate to="/" replace />;
+    }
+
+    if (role !== "siswa") {
         return <Navigate to="/" replace />;
     }
 
@@ -68,6 +84,14 @@ export default function AppRoutes() {
                         <RequireAdmin>
                             <Settings />
                         </RequireAdmin>
+                    }
+                />
+                <Route
+                    path="/siswa/dashboard"
+                    element={
+                        <RequireStudent>
+                            <StudentDashboard />
+                        </RequireStudent>
                     }
                 />
             </Routes>

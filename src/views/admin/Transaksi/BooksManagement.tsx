@@ -1,21 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Layout } from '../../../components/layout/Layout';
 import { BookTable } from '../../../components/books/BookTable';
 import { BookModal } from '../../../components/books/BookModal';
 import { Plus } from 'lucide-react';
-import { mockBooks as initialBooks } from '../../../services/mockData';
 import { mockNotifications } from '../../../services/notificationService';
 import { NotificationPanel } from '../../../components/notifications/NotificationPanel';
 import { Book } from '../../../types';
 import { motion } from 'motion/react';
 import { toast } from 'sonner';
+import usePerpustakaanStore from '../../../stores/perpustakaan';
 
 export function BooksManagement() {
-  const [books, setBooks] = useState<Book[]>(initialBooks);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBook, setEditingBook] = useState<Book | undefined>();
   const [notifications, setNotifications] = useState(mockNotifications);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  const {
+    buku: books,
+    loading,
+    fetchBuku,
+    addBuku,
+    updateBuku,
+    deleteBuku,
+  } = usePerpustakaanStore();
+
+  // Fetch books on mount
+  useEffect(() => {
+    fetchBuku();
+  }, []);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -33,28 +46,38 @@ export function BooksManagement() {
     toast.success('Notification deleted');
   };
 
-  const handleAddBook = (bookData: Omit<Book, 'id'>) => {
-    const newBook: Book = {
-      ...bookData,
-      id: (books.length + 1).toString(),
-    };
-    setBooks([...books, newBook]);
-    toast.success(`"${bookData.title}" has been added successfully!`);
-  };
-
-  const handleEditBook = (bookData: Omit<Book, 'id'>) => {
-    if (editingBook) {
-      setBooks(books.map((book) => (book.id === editingBook.id ? { ...bookData, id: book.id } : book)));
-      setEditingBook(undefined);
-      toast.success(`"${bookData.title}" has been updated successfully!`);
+  const handleAddBook = async (bookData: Omit<Book, 'id'>) => {
+    try {
+      await addBuku(bookData);
+      toast.success(`"${bookData.title}" has been added successfully!`);
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error('Failed to add book. Please try again.');
     }
   };
 
-  const handleDeleteBook = (id: string) => {
+  const handleEditBook = async (bookData: Omit<Book, 'id'>) => {
+    if (editingBook) {
+      try {
+        await updateBuku(editingBook.id, bookData);
+        toast.success(`"${bookData.title}" has been updated successfully!`);
+        setEditingBook(undefined);
+        setIsModalOpen(false);
+      } catch (error) {
+        toast.error('Failed to update book. Please try again.');
+      }
+    }
+  };
+
+  const handleDeleteBook = async (id: string) => {
     const book = books.find((b) => b.id === id);
     if (confirm('Are you sure you want to delete this book?')) {
-      setBooks(books.filter((book) => book.id !== id));
-      toast.success(`"${book?.title}" has been deleted`);
+      try {
+        await deleteBuku(id);
+        toast.success(`"${book?.title}" has been deleted`);
+      } catch (error) {
+        toast.error('Failed to delete book. Please try again.');
+      }
     }
   };
 
