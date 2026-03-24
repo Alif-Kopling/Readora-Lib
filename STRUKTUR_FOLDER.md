@@ -1,4 +1,4 @@
-# 📚 Struktur Folder Perpustakaan React Frontend
+# 📚 Struktur Folder Readora React Frontend
 
 Struktur folder ini mengikuti best practices untuk aplikasi React dengan state management menggunakan Zustand.
 
