@@ -21,7 +21,7 @@ export function Sidebar() {
             <Library className="h-6 w-6 text-white" />
           </div>
           <div>
-            <h1 className="font-bold text-xl text-gray-900">LibraryMS</h1>
+            <h1 className="font-bold text-xl text-gray-900">Readora</h1>
             <p className="text-xs text-gray-500">Admin Dashboard</p>
           </div>
         </div>
@@ -55,7 +55,7 @@ export function Sidebar() {
 
       {/* Footer */}
       <div className="p-4 border-t border-gray-200">
-        <p className="text-xs text-gray-500 text-center">© 2026 LibraryMS</p>
+        <p className="text-xs text-gray-500 text-center">© 2026 Readora</p>
       </div>
     </aside>
   );

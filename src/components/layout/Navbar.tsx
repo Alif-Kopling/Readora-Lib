@@ -40,7 +40,7 @@ export function Navbar({ title = 'Dashboard' }: NavbarProps) {
           <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
             <div className="text-right hidden sm:block">
               <p className="text-sm font-medium text-gray-900">Admin User</p>
-              <p className="text-xs text-gray-500">admin@library.com</p>
+              <p className="text-xs text-gray-500">admin@readora.com</p>
             </div>
             <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold">
               AU

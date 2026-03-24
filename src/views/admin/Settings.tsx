@@ -28,7 +28,7 @@ export function Settings() {
 
   const [profileData, setProfileData] = useState({
     name: 'Admin User',
-    email: 'admin@library.com',
+    email: 'admin@readora.com',
     phone: '+1 234 567 8900',
     role: 'Administrator',
   });

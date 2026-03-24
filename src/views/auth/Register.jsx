@@ -44,7 +44,7 @@ export default function Register() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600">
                     <img
                         src="https://images.unsplash.com/photo-1650513259622-081281181c32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsaWJyYXJ5JTIwYm9va3MlMjBzaGVsdmVzJTIwaW50ZXJpb3IlMjBtb2Rlcm58ZW58MXx8fHwxNzcxMjMyODk5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                        alt="Library"
+                        alt="Readora"
                         className="w-full h-full object-cover opacity-30"
                     />
                 </div>
@@ -84,7 +84,7 @@ export default function Register() {
                             <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
                                 ✓
                             </div>
-                            <span className="text-lg">Free Access to Digital Library</span>
+                            <span className="text-lg">Free Access to Readora</span>
                         </div>
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center">
