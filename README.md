@@ -39,7 +39,6 @@ This project currently focuses on the admin experience and role-based authentica
 
 ```bash
 git clone https://github.com/Alif-Kopling/Readora-Lib.git
-cd perpustakaan_menegement_FE
 ```
 
 ### 2) Install dependencies
