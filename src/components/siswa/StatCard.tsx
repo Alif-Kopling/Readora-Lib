@@ -7,6 +7,7 @@ interface StatCardProps {
   icon: LucideIcon;
   color: "blue" | "green" | "purple" | "orange";
   delay?: number;
+  onClick?: () => void;
 }
 
 const colorClasses = {
@@ -32,7 +33,7 @@ const colorClasses = {
   },
 };
 
-export default function StatCard({ title, value, icon: Icon, color, delay = 0 }: StatCardProps) {
+export default function StatCard({ title, value, icon: Icon, color, delay = 0, onClick }: StatCardProps) {
   const colors = colorClasses[color];
 
   return (
@@ -41,7 +42,8 @@ export default function StatCard({ title, value, icon: Icon, color, delay = 0 }:
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay, ease: "easeOut" }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      className="bg-white rounded-2xl p-6 shadow-lg shadow-gray-200/50 border border-gray-100 hover:shadow-xl hover:shadow-gray-200/80 transition-shadow duration-300"
+      onClick={onClick}
+      className={`bg-white rounded-2xl p-6 shadow-lg shadow-gray-200/50 border border-gray-100 hover:shadow-xl hover:shadow-gray-200/80 transition-shadow duration-300 ${onClick ? "cursor-pointer" : ""}`}
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">
