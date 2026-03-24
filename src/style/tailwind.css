@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+/* Custom utility layers if needed */
+@layer utilities {
+    .glass {
+        @apply bg-white/20 backdrop-blur-md border border-white/20 shadow-xl;
+    }
+
+    .glass-dark {
+        @apply bg-black/20 backdrop-blur-md border border-white/10 shadow-xl;
+    }
+}
