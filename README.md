@@ -5,14 +5,6 @@ This project currently focuses on the admin experience and role-based authentica
 
 ## Preview
 
-Berikut contoh screenshot utama aplikasi:
-
-```md
-![Pre Login](./src/pict-documentation/pre-login.png)
-![Pre Register](./src/pict-documentation/pre-register.png)
-![Admin Dashboard](./src/pict-documentation/pre-admindashboard.png)
-```
-
 ![Pre Login](./src/pict-documentation/pre-login.png)
 ![Pre Register](./src/pict-documentation/pre-register.png)
 ![Admin Dashboard](./src/pict-documentation/pre-admindashboard.png)
