@@ -8,6 +8,10 @@ import { BooksManagement } from "../views/admin/Transaksi/BooksManagement";
 import { MembersManagement } from "../views/admin/MembersManagement";
 import { Transactions } from "../views/admin/Transactions";
 import { Settings } from "../views/admin/Settings";
+import SiswaLayout from "../components/layout/SiswaLayout";
+import DashboardSiswa from "../views/siswa/Dashboard";
+import PinjamBuku from "../views/siswa/PinjamBuku";
+import Riwayat from "../views/siswa/Riwayat";
 
 function RequireAdmin({ children }) {
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -24,11 +28,27 @@ function RequireAdmin({ children }) {
     return children;
 }
 
+function RequireSiswa({ children }) {
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+    const role = useAuthStore((state) => state.role);
+
+    if (!isAuthenticated) {
+        return <Navigate to="/" replace />;
+    }
+
+    if (role !== "siswa") {
+        return <Navigate to="/" replace />;
+    }
+
+    return children;
+}
+
 export default function AppRoutes() {
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route
                     path="/admin/dashboard"
@@ -70,6 +90,21 @@ export default function AppRoutes() {
                         </RequireAdmin>
                     }
                 />
+
+                {/* Siswa Routes */}
+                <Route
+                    path="/siswa"
+                    element={
+                        <RequireSiswa>
+                            <SiswaLayout />
+                        </RequireSiswa>
+                    }
+                >
+                    <Route index element={<Navigate to="/siswa/dashboard" replace />} />
+                    <Route path="dashboard" element={<DashboardSiswa />} />
+                    <Route path="pinjam" element={<PinjamBuku />} />
+                    <Route path="riwayat" element={<Riwayat />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );
