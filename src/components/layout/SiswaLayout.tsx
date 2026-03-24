@@ -1,11 +1,19 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { BookOpen, Home, BookPlus, BookCheck, LogOut, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { studentInfo } from "../../utils/mockData";
+import useAuthStore from "../../stores/auth";
 
 export default function SiswaLayout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   const navItems = [
     { to: "/siswa/dashboard", icon: Home, label: "Dashboard" },
@@ -25,7 +33,7 @@ export default function SiswaLayout() {
             </div>
             <div>
               <h1 className="text-xl font-semibold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
-                LibraryHub
+                Readora
               </h1>
               <p className="text-xs text-gray-500">Student Portal</p>
             </div>
@@ -73,7 +81,10 @@ export default function SiswaLayout() {
                 <p className="text-xs text-gray-500 truncate">{studentInfo.id}</p>
               </div>
             </div>
-            <button className="flex items-center gap-2 w-full px-4 py-2.5 mt-3 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all duration-200 group">
+            <button 
+              onClick={handleLogout}
+              className="flex items-center gap-2 w-full px-4 py-2.5 mt-3 text-sm text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all duration-200 group"
+            >
               <LogOut className="w-4 h-4 group-hover:scale-110 transition-transform" />
               <span>Sign Out</span>
             </button>
@@ -90,7 +101,7 @@ export default function SiswaLayout() {
             </div>
             <div>
               <h1 className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
-                LibraryHub
+                Readora
               </h1>
             </div>
           </div>
