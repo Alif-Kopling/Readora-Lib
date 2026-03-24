@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 /**
- * Perpustakaan Store - Menyimpan state global data perpustakaan
+ * Readora Store - Menyimpan state global data aplikasi
  * Menggunakan Zustand untuk state management
  */
 const usePerpustakaanStore = create((set, get) => ({

@@ -44,7 +44,7 @@ export const mockNotifications: Notification[] = [
   {
     id: '5',
     title: 'System Update',
-    message: 'Library management system updated successfully',
+    message: 'Readora updated successfully',
     type: 'success',
     timestamp: new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString(),
     read: true,

@@ -1,4 +1,4 @@
-// Mock data for the Library Management System
+// Mock data for Readora
 import { Book, Member, Transaction } from '../types';
 
 export const mockBooks: Book[] = [

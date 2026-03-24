@@ -1,4 +1,4 @@
-// Type definitions for the Library Management System
+// Type definitions for Readora
 
 export interface Book {
   id: string;
