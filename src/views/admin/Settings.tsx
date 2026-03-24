@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Layout } from '../../../components/layout/Layout';
+import { Layout } from '../../components/layout/Layout';
 import { motion } from 'motion/react';
 import { toast } from 'sonner';
 import {
@@ -54,17 +54,17 @@ export function Settings() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Sidebar Tabs */}
         <div className="lg:col-span-1">
-          <div className="bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-2xl shadow-glass border border-white/20 dark:border-white/10 p-2">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-2">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                     activeTab === tab.id
-                      ? 'bg-blue-600/10 text-blue-600 font-medium'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5'
+                      ? 'bg-blue-50 text-blue-600 font-medium'
+                      : 'text-gray-700 hover:bg-gray-50'
                   }`}
                 >
                   <Icon className="h-5 w-5" />
@@ -85,8 +85,8 @@ export function Settings() {
           >
             {/* Profile Settings */}
             {activeTab === 'profile' && (
-              <div className="bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-2xl shadow-glass border border-white/20 dark:border-white/10 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Profile Settings</h3>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-6">Profile Settings</h3>
 
                 {/* Profile Picture */}
                 <div className="flex items-center gap-6 mb-8 pb-8 border-b border-gray-200">
@@ -111,48 +111,48 @@ export function Settings() {
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
                         Full Name
                       </label>
                       <input
                         type="text"
                         value={profileData.name}
                         onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
-                        className="w-full px-4 py-2 bg-white/50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
                         Email Address
                       </label>
                       <input
                         type="email"
                         value={profileData.email}
                         onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-                        className="w-full px-4 py-2 bg-white/50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
                         Phone Number
                       </label>
                       <input
                         type="tel"
                         value={profileData.phone}
                         onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
-                        className="w-full px-4 py-2 bg-white/50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Role</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
                       <input
                         type="text"
                         value={profileData.role}
                         disabled
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-white/10 rounded-lg bg-gray-50/50 dark:bg-white/5 text-gray-500 dark:text-gray-400"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500"
                       />
                     </div>
                   </div>
@@ -172,8 +172,8 @@ export function Settings() {
 
             {/* Notification Settings */}
             {activeTab === 'notifications' && (
-              <div className="bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-2xl shadow-glass border border-white/20 dark:border-white/10 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-6">
                   Notification Preferences
                 </h3>
 
@@ -182,8 +182,8 @@ export function Settings() {
                     <div className="flex items-center gap-3">
                       <Mail className="h-5 w-5 text-gray-400" />
                       <div>
-                        <p className="font-medium text-gray-900 dark:text-white">Email Notifications</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Receive notifications via email</p>
+                        <p className="font-medium text-gray-900">Email Notifications</p>
+                        <p className="text-sm text-gray-500">Receive notifications via email</p>
                       </div>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
@@ -193,16 +193,16 @@ export function Settings() {
                         onChange={(e) => setEmailNotifications(e.target.checked)}
                         className="sr-only peer"
                       />
-                      <div className="w-11 h-6 bg-gray-200 dark:bg-white/10 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                     </label>
                   </div>
 
-                  <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-white/10">
+                  <div className="flex items-center justify-between py-4 border-b border-gray-200">
                     <div className="flex items-center gap-3">
-                      <Bell className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+                      <Bell className="h-5 w-5 text-gray-400" />
                       <div>
-                        <p className="font-medium text-gray-900 dark:text-white">Push Notifications</p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Receive push notifications</p>
+                        <p className="font-medium text-gray-900">Push Notifications</p>
+                        <p className="text-sm text-gray-500">Receive push notifications</p>
                       </div>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
@@ -212,14 +212,14 @@ export function Settings() {
                         onChange={(e) => setPushNotifications(e.target.checked)}
                         className="sr-only peer"
                       />
-                      <div className="w-11 h-6 bg-gray-200 dark:bg-white/10 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                     </label>
                   </div>
 
-                  <div className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-white/10">
+                  <div className="flex items-center justify-between py-4 border-b border-gray-200">
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white">Overdue Book Alerts</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Get notified about overdue books</p>
+                      <p className="font-medium text-gray-900">Overdue Book Alerts</p>
+                      <p className="text-sm text-gray-500">Get notified about overdue books</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
@@ -228,14 +228,14 @@ export function Settings() {
                         onChange={(e) => setOverdueAlerts(e.target.checked)}
                         className="sr-only peer"
                       />
-                      <div className="w-11 h-6 bg-gray-200 dark:bg-white/10 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                     </label>
                   </div>
 
                   <div className="flex items-center justify-between py-4">
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white">New Member Alerts</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">Get notified when new members join</p>
+                      <p className="font-medium text-gray-900">New Member Alerts</p>
+                      <p className="text-sm text-gray-500">Get notified when new members join</p>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
@@ -253,8 +253,8 @@ export function Settings() {
 
             {/* Security Settings */}
             {activeTab === 'security' && (
-              <div className="bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-2xl shadow-glass border border-white/20 dark:border-white/10 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Security Settings</h3>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-6">Security Settings</h3>
 
                 <div className="space-y-6">
                   {/* Change Password */}
@@ -262,21 +262,21 @@ export function Settings() {
                     <h4 className="font-medium text-gray-900 mb-4">Change Password</h4>
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
                           Current Password
                         </label>
                         <input
                           type="password"
-                          className="w-full px-4 py-2 bg-white/50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
                           New Password
                         </label>
                         <input
                           type="password"
-                          className="w-full px-4 py-2 bg-white/50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
                       <div>
@@ -321,8 +321,8 @@ export function Settings() {
 
             {/* Appearance Settings */}
             {activeTab === 'appearance' && (
-              <div className="bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-2xl shadow-glass border border-white/20 dark:border-white/10 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Appearance Settings</h3>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-6">Appearance Settings</h3>
 
                 <div className="space-y-6">
                   {/* Theme */}
@@ -375,15 +375,15 @@ export function Settings() {
 
             {/* General Settings */}
             {activeTab === 'general' && (
-              <div className="bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-2xl shadow-glass border border-white/20 dark:border-white/10 p-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">General Settings</h3>
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-6">General Settings</h3>
 
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Language
                     </label>
-                    <select className="w-full px-4 py-2 bg-white/50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white">
+                    <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                       <option>English</option>
                       <option>Bahasa Indonesia</option>
                       <option>Spanish</option>
@@ -392,10 +392,10 @@ export function Settings() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Timezone
                     </label>
-                    <select className="w-full px-4 py-2 bg-white/50 dark:bg-white/5 border border-gray-300 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-white">
+                    <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                       <option>UTC (GMT +0:00)</option>
                       <option>Asia/Jakarta (GMT +7:00)</option>
                       <option>America/New_York (GMT -5:00)</option>
