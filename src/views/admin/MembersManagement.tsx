@@ -1,16 +1,36 @@
 import { useState } from 'react';
-import { Layout } from '../../../components/layout/Layout';
-import { MemberTable } from '../../../components/members/MemberTable';
-import { MemberModal } from '../../../components/members/MemberModal';
+import { Layout } from '../../components/layout/Layout';
+import { MemberTable } from '../../components/members/MemberTable';
+import { MemberModal } from '../../components/members/MemberModal';
 import { Plus } from 'lucide-react';
-import { mockMembers as initialMembers } from '../../../services/mockData';
-import { Member } from '../../../types';
+import { mockMembers as initialMembers } from '../../services/mockData';
+import { mockNotifications } from '../../services/notificationService';
+import { NotificationPanel } from '../../components/notifications/NotificationPanel';
+import { Member } from '../../types';
 import { motion } from 'motion/react';
 import { toast } from 'sonner';
 
-export function AnggotaList() {
+export function MembersManagement() {
   const [members, setMembers] = useState<Member[]>(initialMembers);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [notifications, setNotifications] = useState(mockNotifications);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  const unreadCount = notifications.filter((n) => !n.read).length;
+
+  const handleMarkAsRead = (id: string) => {
+    setNotifications(notifications.map((n) => (n.id === id ? { ...n, read: true } : n)));
+  };
+
+  const handleMarkAllAsRead = () => {
+    setNotifications(notifications.map((n) => ({ ...n, read: true })));
+    toast.success('All notifications marked as read');
+  };
+
+  const handleDeleteNotification = (id: string) => {
+    setNotifications(notifications.filter((n) => n.id !== id));
+    toast.success('Notification deleted');
+  };
 
   const handleAddMember = (memberData: Omit<Member, 'id' | 'joinDate'>) => {
     const newMember: Member = {
@@ -31,7 +51,12 @@ export function AnggotaList() {
   };
 
   return (
-    <Layout title="Members Management">
+    <>
+      <Layout
+        title="Members Management"
+        notificationCount={unreadCount}
+        onNotificationClick={() => setIsNotificationOpen(true)}
+      >
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -58,19 +83,19 @@ export function AnggotaList() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-2xl shadow-glass border border-white/20 dark:border-white/10 p-4 hover:shadow-premium transition-all duration-300"
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
           >
-            <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">Total Members</p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">{members.length}</p>
+            <p className="text-sm text-gray-600">Total Members</p>
+            <p className="text-2xl font-bold text-gray-900">{members.length}</p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-2xl shadow-glass border border-white/20 dark:border-white/10 p-4 hover:shadow-premium transition-all duration-300"
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
           >
-            <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">Active Members</p>
-            <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+            <p className="text-sm text-gray-600">Active Members</p>
+            <p className="text-2xl font-bold text-green-600">
               {members.filter((m) => m.status === 'Active').length}
             </p>
           </motion.div>
@@ -78,10 +103,10 @@ export function AnggotaList() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-2xl shadow-glass border border-white/20 dark:border-white/10 p-4 hover:shadow-premium transition-all duration-300"
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
           >
-            <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">Inactive Members</p>
-            <p className="text-2xl font-bold text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-gray-600">Inactive Members</p>
+            <p className="text-2xl font-bold text-gray-600">
               {members.filter((m) => m.status === 'Inactive').length}
             </p>
           </motion.div>
@@ -103,5 +128,15 @@ export function AnggotaList() {
           onSave={handleAddMember}
         />
       </Layout>
+
+      <NotificationPanel
+        isOpen={isNotificationOpen}
+        onClose={() => setIsNotificationOpen(false)}
+        notifications={notifications}
+        onMarkAsRead={handleMarkAsRead}
+        onMarkAllAsRead={handleMarkAllAsRead}
+        onDelete={handleDeleteNotification}
+      />
+    </>
   );
 }

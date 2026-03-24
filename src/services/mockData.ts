@@ -1,0 +1,152 @@
+// Mock data for Readora
+import { Book, Member, Transaction } from '../types';
+
+export const mockBooks: Book[] = [
+  {
+    id: '1',
+    title: 'The Great Gatsby',
+    author: 'F. Scott Fitzgerald',
+    category: 'Fiction',
+    status: 'Available',
+  },
+  {
+    id: '2',
+    title: 'To Kill a Mockingbird',
+    author: 'Harper Lee',
+    category: 'Fiction',
+    status: 'Borrowed',
+  },
+  {
+    id: '3',
+    title: '1984',
+    author: 'George Orwell',
+    category: 'Science Fiction',
+    status: 'Available',
+  },
+  {
+    id: '4',
+    title: 'Pride and Prejudice',
+    author: 'Jane Austen',
+    category: 'Romance',
+    status: 'Available',
+  },
+  {
+    id: '5',
+    title: 'The Catcher in the Rye',
+    author: 'J.D. Salinger',
+    category: 'Fiction',
+    status: 'Borrowed',
+  },
+  {
+    id: '6',
+    title: 'Harry Potter and the Sorcerer\'s Stone',
+    author: 'J.K. Rowling',
+    category: 'Fantasy',
+    status: 'Available',
+  },
+  {
+    id: '7',
+    title: 'The Hobbit',
+    author: 'J.R.R. Tolkien',
+    category: 'Fantasy',
+    status: 'Borrowed',
+  },
+  {
+    id: '8',
+    title: 'Sapiens',
+    author: 'Yuval Noah Harari',
+    category: 'Non-Fiction',
+    status: 'Available',
+  },
+];
+
+export const mockMembers: Member[] = [
+  {
+    id: '1',
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    status: 'Active',
+    joinDate: '2024-01-15',
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    email: 'jane.smith@example.com',
+    status: 'Active',
+    joinDate: '2024-02-20',
+  },
+  {
+    id: '3',
+    name: 'Michael Johnson',
+    email: 'michael.j@example.com',
+    status: 'Active',
+    joinDate: '2024-03-10',
+  },
+  {
+    id: '4',
+    name: 'Emily Brown',
+    email: 'emily.brown@example.com',
+    status: 'Inactive',
+    joinDate: '2023-12-05',
+  },
+  {
+    id: '5',
+    name: 'David Wilson',
+    email: 'david.w@example.com',
+    status: 'Active',
+    joinDate: '2024-01-25',
+  },
+];
+
+export const mockTransactions: Transaction[] = [
+  {
+    id: '1',
+    bookId: '2',
+    bookTitle: 'To Kill a Mockingbird',
+    memberId: '1',
+    memberName: 'John Doe',
+    borrowDate: '2026-03-10',
+    returnDate: null,
+    status: 'Borrowed',
+  },
+  {
+    id: '2',
+    bookId: '5',
+    bookTitle: 'The Catcher in the Rye',
+    memberId: '2',
+    memberName: 'Jane Smith',
+    borrowDate: '2026-03-15',
+    returnDate: null,
+    status: 'Borrowed',
+  },
+  {
+    id: '3',
+    bookId: '7',
+    bookTitle: 'The Hobbit',
+    memberId: '3',
+    memberName: 'Michael Johnson',
+    borrowDate: '2026-03-05',
+    returnDate: null,
+    status: 'Overdue',
+  },
+  {
+    id: '4',
+    bookId: '1',
+    bookTitle: 'The Great Gatsby',
+    memberId: '5',
+    memberName: 'David Wilson',
+    borrowDate: '2026-02-20',
+    returnDate: '2026-03-05',
+    status: 'Returned',
+  },
+  {
+    id: '5',
+    bookId: '3',
+    bookTitle: '1984',
+    memberId: '1',
+    memberName: 'John Doe',
+    borrowDate: '2026-02-15',
+    returnDate: '2026-03-01',
+    status: 'Returned',
+  },
+];

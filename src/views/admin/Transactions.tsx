@@ -1,11 +1,36 @@
-import { Layout } from '../../../components/layout/Layout';
+import { useState } from 'react';
+import { Layout } from '../../components/layout/Layout';
 import { Calendar, User, BookOpen } from 'lucide-react';
-import { mockTransactions } from '../../../services/mockData';
+import { mockTransactions } from '../../services/mockData';
+import { mockNotifications } from '../../services/notificationService';
+import { NotificationPanel } from '../../components/notifications/NotificationPanel';
 import { motion } from 'motion/react';
 
-export function TransaksiList() {
+export function Transactions() {
+  const [notifications, setNotifications] = useState(mockNotifications);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  const unreadCount = notifications.filter((n) => !n.read).length;
+
+  const handleMarkAsRead = (id: string) => {
+    setNotifications(notifications.map((n) => (n.id === id ? { ...n, read: true } : n)));
+  };
+
+  const handleMarkAllAsRead = () => {
+    setNotifications(notifications.map((n) => ({ ...n, read: true })));
+  };
+
+  const handleDeleteNotification = (id: string) => {
+    setNotifications(notifications.filter((n) => n.id !== id));
+  };
+
   return (
-    <Layout title="Transactions">
+    <>
+      <Layout
+        title="Transactions"
+        notificationCount={unreadCount}
+        onNotificationClick={() => setIsNotificationOpen(true)}
+      >
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -152,5 +177,15 @@ export function TransaksiList() {
           </div>
         </motion.div>
       </Layout>
+
+      <NotificationPanel
+        isOpen={isNotificationOpen}
+        onClose={() => setIsNotificationOpen(false)}
+        notifications={notifications}
+        onMarkAsRead={handleMarkAsRead}
+        onMarkAllAsRead={handleMarkAllAsRead}
+        onDelete={handleDeleteNotification}
+      />
+    </>
   );
 }

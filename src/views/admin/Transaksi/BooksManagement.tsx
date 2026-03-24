@@ -4,14 +4,34 @@ import { BookTable } from '../../../components/books/BookTable';
 import { BookModal } from '../../../components/books/BookModal';
 import { Plus } from 'lucide-react';
 import { mockBooks as initialBooks } from '../../../services/mockData';
+import { mockNotifications } from '../../../services/notificationService';
+import { NotificationPanel } from '../../../components/notifications/NotificationPanel';
 import { Book } from '../../../types';
 import { motion } from 'motion/react';
 import { toast } from 'sonner';
 
-export function BukuList() {
+export function BooksManagement() {
   const [books, setBooks] = useState<Book[]>(initialBooks);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBook, setEditingBook] = useState<Book | undefined>();
+  const [notifications, setNotifications] = useState(mockNotifications);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  const unreadCount = notifications.filter((n) => !n.read).length;
+
+  const handleMarkAsRead = (id: string) => {
+    setNotifications(notifications.map((n) => (n.id === id ? { ...n, read: true } : n)));
+  };
+
+  const handleMarkAllAsRead = () => {
+    setNotifications(notifications.map((n) => ({ ...n, read: true })));
+    toast.success('All notifications marked as read');
+  };
+
+  const handleDeleteNotification = (id: string) => {
+    setNotifications(notifications.filter((n) => n.id !== id));
+    toast.success('Notification deleted');
+  };
 
   const handleAddBook = (bookData: Omit<Book, 'id'>) => {
     const newBook: Book = {
@@ -49,7 +69,12 @@ export function BukuList() {
   };
 
   return (
-    <Layout title="Books Management">
+    <>
+      <Layout
+        title="Books Management"
+        notificationCount={unreadCount}
+        onNotificationClick={() => setIsNotificationOpen(true)}
+      >
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -71,29 +96,38 @@ export function BukuList() {
         </motion.div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-          {[
-            { label: 'Total Books', value: books.length, color: 'blue' },
-            { label: 'Available', value: books.filter((b) => b.status === 'Available').length, color: 'green' },
-            { label: 'Borrowed', value: books.filter((b) => b.status === 'Borrowed').length, color: 'yellow' },
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * (index + 1) }}
-              className="bg-white/50 dark:bg-black/20 backdrop-blur-xl rounded-2xl shadow-glass border border-white/20 dark:border-white/10 p-6 hover:shadow-premium transition-all group"
-            >
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-medium mb-1">{stat.label}</p>
-              <p className={`text-3xl font-bold ${
-                stat.color === 'green' ? 'text-green-600 dark:text-green-400' : 
-                stat.color === 'yellow' ? 'text-yellow-600 dark:text-yellow-400' : 
-                'text-gray-900 dark:text-white'
-              }`}>
-                {stat.value}
-              </p>
-            </motion.div>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
+          >
+            <p className="text-sm text-gray-600">Total Books</p>
+            <p className="text-2xl font-bold text-gray-900">{books.length}</p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
+          >
+            <p className="text-sm text-gray-600">Available</p>
+            <p className="text-2xl font-bold text-green-600">
+              {books.filter((b) => b.status === 'Available').length}
+            </p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
+          >
+            <p className="text-sm text-gray-600">Borrowed</p>
+            <p className="text-2xl font-bold text-yellow-600">
+              {books.filter((b) => b.status === 'Borrowed').length}
+            </p>
+          </motion.div>
         </div>
 
         {/* Table */}
@@ -113,5 +147,15 @@ export function BukuList() {
           book={editingBook}
         />
       </Layout>
+
+      <NotificationPanel
+        isOpen={isNotificationOpen}
+        onClose={() => setIsNotificationOpen(false)}
+        notifications={notifications}
+        onMarkAsRead={handleMarkAsRead}
+        onMarkAllAsRead={handleMarkAllAsRead}
+        onDelete={handleDeleteNotification}
+      />
+    </>
   );
 }
