@@ -3,8 +3,10 @@ import { BookOpen, Calendar, Clock, TrendingUp } from "lucide-react";
 import StatCard from "../../components/siswa/StatCard";
 import { studentInfo, studentStats, borrowedBooks } from "../../utils/mockData";
 import { ImageWithFallback } from "../../components/figma/ImageWithFallback";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -35,6 +37,7 @@ export default function Dashboard() {
           icon={BookOpen}
           color="blue"
           delay={0.1}
+          onClick={() => navigate("/siswa/pinjam")}
         />
         <StatCard
           title="Due This Week"
@@ -42,6 +45,7 @@ export default function Dashboard() {
           icon={Calendar}
           color="orange"
           delay={0.2}
+          onClick={() => navigate("/siswa/riwayat")}
         />
         <StatCard
           title="Total History"
@@ -49,6 +53,7 @@ export default function Dashboard() {
           icon={TrendingUp}
           color="purple"
           delay={0.3}
+          onClick={() => navigate("/siswa/riwayat")}
         />
         <StatCard
           title="Overdue Books"
@@ -56,6 +61,7 @@ export default function Dashboard() {
           icon={Clock}
           color="green"
           delay={0.4}
+          onClick={() => navigate("/siswa/riwayat")}
         />
       </div>
 
@@ -137,14 +143,14 @@ export default function Dashboard() {
           <p className="text-blue-100 mb-4">
             Browse our extensive collection and borrow books instantly.
           </p>
-          <motion.a
-            href="/borrow"
+          <motion.button
+            onClick={() => navigate("/siswa/pinjam")}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-block px-6 py-3 bg-white text-blue-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+            className="inline-block mt-auto px-6 py-3 bg-white text-blue-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
           >
             Browse Books
-          </motion.a>
+          </motion.button>
         </div>
 
         <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 shadow-lg shadow-purple-500/30 text-white">
@@ -152,14 +158,14 @@ export default function Dashboard() {
           <p className="text-purple-100 mb-4">
             Manage your borrowed books and process returns easily.
           </p>
-          <motion.a
-            href="/return"
+          <motion.button
+            onClick={() => navigate("/siswa/riwayat")}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-block px-6 py-3 bg-white text-purple-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+            className="inline-block mt-auto px-6 py-3 bg-white text-purple-600 font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
           >
             Return Books
-          </motion.a>
+          </motion.button>
         </div>
       </motion.div>
     </motion.div>
