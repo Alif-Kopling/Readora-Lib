@@ -38,7 +38,7 @@ export default function Login() {
             return;
         }
 
-        navigate("/login", { replace: true });
+        navigate("/siswa/dashboard", { replace: true });
     };
 
     return (
