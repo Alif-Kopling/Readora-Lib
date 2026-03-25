@@ -17,9 +17,7 @@
 [Features](#-features) • [Tech Stack](#-tech-stack) • [Live Demo](#-live-demo) • [Getting Started](#-getting-started) • [Documentation](#-documentation) • [Contributing](#-contributing)
 
 </div>
-
 ---
-
 ## 🎯 Overview
 
 **Readora-Lib** is a cutting-edge library management system designed to streamline library operations for both administrators and students. Built with modern web technologies, it provides a seamless experience for managing books, members, and transactions while maintaining robust security through role-based access control.
@@ -62,7 +60,9 @@
   <img src="./src/pict-documentation/pre-studentdb.png" alt="Student Dashboard" width="
     70%" />
 </div>
+
 ---
+
 ## ✨ Features
 
 ### 🔐 Authentication & Authorization
