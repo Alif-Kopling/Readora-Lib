@@ -40,12 +40,12 @@
 
 #### Login
 <div align="center">
-  <img src="./src/pict-documentation/pre-login.png" alt="Login Page" width="45%" />
+  <img src="./src/pict-documentation/pre-login.png" alt="Login Page" width="70%" />
 </div>
 
 #### Register
 <div align="center">
-  <img src="./src/pict-documentation/pre-register.png" alt="Register Page" width="45%" />
+  <img src="./src/pict-documentation/pre-register.png" alt="Register Page" width="70%" />
 </div>
 
 ---
@@ -54,13 +54,13 @@
 
 #### 👑 Admin Dashboard
 <div align="center">
-  <img src="./src/pict-documentation/pre-admindb.png" alt="Admin Dashboard" width="80%" />
+  <img src="./src/pict-documentation/pre-admindb.png" alt="Admin Dashboard" width="70%" />
 </div>
 
 #### 🎓 Student Dashboard
 <div align="center">
   <img src="./src/pict-documentation/pre-studentdb.png" alt="Student Dashboard" width="
-    80%" />
+    70%" />
 </div>
 ---
 ## ✨ Features
