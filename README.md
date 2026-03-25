@@ -36,24 +36,33 @@
 ---
 ## 📸 Preview
 
-### Authentication
-##Login
+### 🔐 Authentication
+
+#### Login
 <div align="center">
-  <img src="./src/pict-documentation/pre-login.png" alt="Login Page" width="45%" style="margin: 5px;" />
-</div>
-##Register
-<div>
-  <img src="./src/pict-documentation/pre-register.png" alt="Register Page" width="45%" style="margin: 5px;" />
+  <img src="./src/pict-documentation/pre-login.png" alt="Login Page" width="45%" />
 </div>
 
-### Admin And Student Dashboard
--Admin
+#### Register
 <div align="center">
-  <img src="./src/pict-documentation/pre-admindb.png" alt="Admin Dashboard" width="90%" style="margin: 5px;" />
-  <img src="./src/pict-documentation/pre-studentdb.png" alt="Student Dashboard" width="90%" style="margin: 5px;" />
+  <img src="./src/pict-documentation/pre-register.png" alt="Register Page" width="45%" />
 </div>
+
 ---
 
+### 📊 Dashboard
+
+#### 👑 Admin Dashboard
+<div align="center">
+  <img src="./src/pict-documentation/pre-admindb.png" alt="Admin Dashboard" width="80%" />
+</div>
+
+#### 🎓 Student Dashboard
+<div align="center">
+  <img src="./src/pict-documentation/pre-studentdb.png" alt="Student Dashboard" width="
+    80%" />
+</div>
+---
 ## ✨ Features
 
 ### 🔐 Authentication & Authorization
