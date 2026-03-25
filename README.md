@@ -20,22 +20,6 @@
 
 ---
 
-## 📖 Table of Contents
-
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Live Demo](#-live-demo)
-- [Getting Started](#-getting-started)
-- [Project Structure](#-project-structure)
-- [Architecture](#-architecture)
-- [API Integration](#-api-integration)
-- [Contributing](#-contributing)
-- [Team](#-team)
-- [License](#-license)
-
----
-
 ## 🎯 Overview
 
 **Readora-Lib** is a cutting-edge library management system designed to streamline library operations for both administrators and students. Built with modern web technologies, it provides a seamless experience for managing books, members, and transactions while maintaining robust security through role-based access control.
@@ -49,6 +33,24 @@
 - 🔄 **Real-time Updates** - Instant notifications for all user actions
 - 🎯 **Type-Safe** - TypeScript integration for enhanced code quality and developer experience
 
+---
+## 📸 Preview
+
+### Authentication
+<div align="center">
+  <img src="./src/pict-documentation/pre-login.png" alt="Login Page" width="45%" style="margin: 5px;" />
+  <img src="./src/pict-documentation/pre-register.png" alt="Register Page" width="45%" style="margin: 5px;" />
+</div>
+
+### Admin Dashboard
+<div align="center">
+  <img src="./src/pict-documentation/pre-admindb.png" alt="Admin Dashboard" width="90%" style="margin: 5px;" />
+</div>
+
+### Student Dashboard
+<div align="center">
+  <img src="./src/pict-documentation/pre-studentdb.png" alt="Student Dashboard" width="90%" style="margin: 5px;" />
+</div>
 ---
 
 ## ✨ Features
@@ -127,26 +129,6 @@
 
 ---
 
-## 🌐 Live Demo
-
-> 🚧 **Demo Coming Soon**
-
-Stay tuned! We're preparing a live demo environment where you can explore Readora-Lib firsthand.
-
-<!--
-### Demo Credentials
-
-**Admin Account:**
-- Email: `admin @readora.lib`
-- Password: `demo123`
-
-**Student Account:**
-- Email: `student @readora.lib`
-- Password: `demo123`
--->
-
----
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -221,24 +203,24 @@ The production build will be output to the `dist/` directory.
 
 ```
 Readora-Lib/
-├── public/                     # Static public assets
+├── public/                    
 │   └── vite.svg
 ├── src/
-│   ├── assets/                 # Static assets (images, fonts, icons)
-│   ├── components/             # Reusable UI components
-│   │   ├── books/             # Book-related components
-│   │   ├── figma/             # Figma design components
-│   │   ├── layout/            # Layout components
+│   ├── assets/               
+│   ├── components/          
+│   │   ├── books/            
+│   │   ├── figma/             
+│   │   ├── layout/          
 │   │   │   ├── Footer.jsx
 │   │   │   ├── Layout.tsx
 │   │   │   ├── Navbar.jsx
 │   │   │   ├── Sidebar.jsx
 │   │   │   └── SiswaLayout.tsx
-│   │   ├── members/           # Member management components
-│   │   ├── notifications/     # Notification components
-│   │   ├── shared/            # Shared utility components
-│   │   ├── siswa/             # Student-specific components
-│   │   └── ui/                # Base UI components (shadcn/ui)
+│   │   ├── members/           
+│   │   ├── notifications/   
+│   │   ├── shared/            
+│   │   ├── siswa/             
+│   │   └── ui/                
 │   │       ├── accordion.tsx
 │   │       ├── alert-dialog.tsx
 │   │       ├── alert.tsx
@@ -255,95 +237,50 @@ Readora-Lib/
 │   │       ├── select.tsx
 │   │       ├── table.tsx
 │   │       └── tabs.tsx
-│   ├── pict-documentation/     # Screenshots and documentation
-│   ├── router/                 # Routing configuration
-│   │   ├── AppRoutes.jsx      # Main routes definition
-│   │   └── guards.js          # Route protection guards
-│   ├── services/               # API and external services
-│   │   ├── endpoints/         # API endpoint definitions
+│   ├── pict-documentation/     
+│   ├── router/               
+│   │   ├── AppRoutes.jsx      
+│   │   └── guards.js            
+│   ├── services/               
+│   │   ├── endpoints/     
 │   │   │   ├── anggotaService.js
 │   │   │   └── authService.js
-│   │   ├── api.js             # Axios instance configuration
-│   │   ├── mockData.ts        # Mock data for development
+│   │   ├── api.js             
+│   │   ├── mockData.ts        
 │   │   └── notificationService.ts
-│   ├── stores/                 # Zustand state stores
-│   │   ├── auth.js            # Authentication state
-│   │   ├── notification.ts    # Notification state
-│   │   └── perpustakaan.js    # Library data state
-│   ├── style/                  # Global styles
-│   ├── types/                  # TypeScript type definitions
-│   ├── utils/                  # Utility functions
-│   ├── views/                  # Page views
-│   │   ├── admin/             # Admin pages
-│   │   │   ├── Anggota/       # Member management
-│   │   │   ├── Buku/          # Book management
-│   │   │   ├── Transaksi/     # Transaction management
+│   ├── stores/                 
+│   │   ├── auth.js            
+│   │   ├── notification.ts    
+│   │   └── perpustakaan.js    
+│   ├── style/                 
+│   ├── types/                
+│   ├── utils/                  
+│   ├── views/                 
+│   │   ├── admin/
+│   │   │   ├── Anggota/       
+│   │   │   ├── Buku/         
+│   │   │   ├── Transaksi/     
 │   │   │   ├── Dashboard.tsx
 │   │   │   ├── DashboardAdmin.jsx
 │   │   │   ├── MembersManagement.tsx
 │   │   │   ├── Settings.tsx
 │   │   │   └── Transactions.tsx
-│   │   ├── auth/              # Authentication pages
+│   │   ├── auth/              
 │   │   │   ├── Login.jsx
 │   │   │   └── Register.jsx
-│   │   └── siswa/             # Student pages
+│   │   └── siswa/             
 │   │       ├── Dashboard.tsx
 │   │       ├── PinjamBuku.tsx
 │   │       └── Riwayat.tsx
-│   ├── App.jsx                 # Root application component
-│   └── main.jsx                # Application entry point
-├── .env                        # Environment variables
-├── .env.example                # Environment variables template
-├── .gitignore                  # Git ignore rules
-├── index.html                  # HTML entry point
-├── package.json                # Project dependencies
-├── vite.config.js              # Vite configuration
-└── README.md                   # Project documentation
-```
-
----
-
-## 🏗️ Architecture
-
-### Authentication Flow
-
-```mermaid
-graph TD
-    A[User Visits App] --> B{Authenticated?}
-    B -->|No| C[Login/Register Page]
-    B -->|Yes| D{Check Role}
-    C --> E[Enter Credentials]
-    E --> F{Valid?}
-    F -->|No| C
-    F -->|Yes| G[Store Token]
-    G --> D
-    D -->|Admin| H[/admin/dashboard]
-    D -->|Siswa| I[/siswa/dashboard]
-    H --> J[Admin Features]
-    I --> K[Student Features]
-```
-
-### Route Protection
-
-| Role | Protected Routes |
-|------|-----------------|
-| **Admin** | `/admin/dashboard`, `/admin/books`, `/admin/members`, `/admin/transactions`, `/admin/settings` |
-| **Siswa** | `/siswa/dashboard`, `/siswa/pinjam`, `/siswa/riwayat` |
-
-### State Management Architecture
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Zustand Stores                        │
-├─────────────────────────────────────────────────────────┤
-│  auth.js           │ User authentication & session      │
-│  notification.ts   │ Toast notifications & alerts       │
-│  perpustakaan.js   │ Books, members, transactions data  │
-└─────────────────────────────────────────────────────────┘
-                          ↓
-┌─────────────────────────────────────────────────────────┐
-│                   React Components                       │
-└─────────────────────────────────────────────────────────┘
+│   ├── App.jsx                 
+│   └── main.jsx                
+├── .env                   
+├── .env.example                
+├── .gitignore              
+├── index.html             
+├── package.json               
+├── vite.config.js     
+└── README.md                   
 ```
 
 ---
@@ -414,26 +351,6 @@ const handleLogin = async (credentials) => {
 ```
 
 ---
-
-## 📸 Screenshots
-
-### Authentication
-<div align="center">
-  <img src="./src/pict-documentation/pre-login.png" alt="Login Page" width="45%" style="margin: 5px;" />
-  <img src="./src/pict-documentation/pre-register.png" alt="Register Page" width="45%" style="margin: 5px;" />
-</div>
-
-### Admin Dashboard
-<div align="center">
-  <img src="./src/pict-documentation/pre-admindashboard.png" alt="Admin Dashboard" width="90%" style="margin: 5px;" />
-</div>
-
-### Additional Screens
-<div align="center">
-  <img src="./src/pict-documentation/Screenshot%202026-03-24%20103204.png" alt="Dashboard View" width="30%" style="margin: 5px;" />
-  <img src="./src/pict-documentation/Screenshot%202026-03-24%20103219.png" alt="Books Management" width="30%" style="margin: 5px;" />
-  <img src="./src/pict-documentation/Screenshot%202026-03-24%20103228.png" alt="Transactions" width="30%" style="margin: 5px;" />
-</div>
 
 ---
 
@@ -510,7 +427,7 @@ For questions, issues, or feature requests, please contact the development team.
 
 <div align="center">
 
-**Made with ❤️ by the Readora-Lib Team**
+**Made with ❤️ by the Readora Team**
 
 Built with [React](https://react.dev/) + [Vite](https://vitejs.dev/) + [Tailwind CSS](https://tailwindcss.com/)
 
