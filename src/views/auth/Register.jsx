@@ -1,29 +1,57 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Button } from "../../components/ui/button";
 import { BookOpen, ArrowLeft, Eye, EyeOff, UserPlus, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
+import useAuthStore from "../../stores/auth";
+import { toast } from "sonner";
 
 export default function Register() {
     const [formData, setFormData] = useState({
         fullName: "",
-        studentId: "",
-        class: "",
-        username: "",
+        email: "",
         password: "",
     });
     const [showPassword, setShowPassword] = useState(false);
+    const [isRegistering, setIsRegistering] = useState(false);
+    const navigate = useNavigate();
+    const register = useAuthStore((state) => state.register);
 
     const handleChange = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }));
     };
 
-    const handleRegister = () => {
-        console.log("Registering student:", formData);
-        // Add your registration logic here
+    const handleRegister = async () => {
+        const { fullName, email, username, password } = formData;
+
+        if (!fullName.trim() || !email.trim() || !password.trim()) {
+            toast.error("Full name, email, and password are required");
+            return;
+        }
+
+        if (password.length < 6) {
+            toast.error("Password must be at least 6 characters");
+            return;
+        }
+
+        setIsRegistering(true);
+
+        // Use the email as provided by user
+        const userEmail = email;
+
+        const result = await register(fullName, userEmail, password, 'USER');
+
+        setIsRegistering(false);
+
+        if (result.success) {
+            toast.success("Registration successful! Please login.");
+            navigate("/", { replace: true });
+        } else {
+            toast.error(result.error || "Registration failed. Please try again.");
+        }
     };
 
     return (
@@ -145,37 +173,13 @@ export default function Register() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="studentId">Student ID</Label>
+                                    <Label htmlFor="email">Email</Label>
                                     <Input
-                                        id="studentId"
-                                        type="text"
-                                        placeholder="Enter your student ID"
-                                        value={formData.studentId}
-                                        onChange={(e) => handleChange("studentId", e.target.value)}
-                                        className="rounded-lg border-2 focus:border-purple-500 transition-all"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="class">Class</Label>
-                                    <Input
-                                        id="class"
-                                        type="text"
-                                        placeholder="Enter your class"
-                                        value={formData.class}
-                                        onChange={(e) => handleChange("class", e.target.value)}
-                                        className="rounded-lg border-2 focus:border-purple-500 transition-all"
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="username">Username</Label>
-                                    <Input
-                                        id="username"
-                                        type="text"
-                                        placeholder="Choose a username"
-                                        value={formData.username}
-                                        onChange={(e) => handleChange("username", e.target.value)}
+                                        id="email"
+                                        type="email"
+                                        placeholder="Enter your email"
+                                        value={formData.email}
+                                        onChange={(e) => handleChange("email", e.target.value)}
                                         className="rounded-lg border-2 focus:border-purple-500 transition-all"
                                     />
                                 </div>
@@ -203,10 +207,11 @@ export default function Register() {
 
                                 <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
                                     <Button
-                                        className="w-full bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl py-6 shadow-lg shadow-purple-200 transition-all duration-300 font-semibold text-lg"
+                                        disabled={isRegistering}
+                                        className="w-full bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white rounded-xl py-6 shadow-lg shadow-purple-200 transition-all duration-300 font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                                         onClick={handleRegister}
                                     >
-                                        Register Now
+                                        {isRegistering ? "Registering..." : "Register Now"}
                                     </Button>
                                 </motion.div>
 

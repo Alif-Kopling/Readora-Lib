@@ -8,36 +8,53 @@ import { Button } from "../../components/ui/button";
 import { BookOpen, Eye, EyeOff, Sparkles, Book, GraduationCap } from "lucide-react";
 import { motion } from "motion/react";
 import useAuthStore from "../../stores/auth";
+import { toast } from "sonner";
 
 export default function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [formData, setFormData] = useState({
+        adminEmail: "",
+        adminPassword: "",
+        studentEmail: "",
+        studentPassword: "",
+    });
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
     const navigate = useNavigate();
     const login = useAuthStore((state) => state.login);
 
-    const handleLogin = (userType) => {
-        if (!username.trim() || !password.trim()) {
-            alert("Username dan password wajib diisi");
+    const handleLogin = async (userType) => {
+        const email = userType === 'admin' ? formData.adminEmail : formData.studentEmail;
+        const password = userType === 'admin' ? formData.adminPassword : formData.studentPassword;
+
+        if (!email.trim() || !password.trim()) {
+            toast.error("Email dan password wajib diisi");
             return;
         }
 
-        const role = userType === "admin" ? "admin" : "siswa";
-        const userData = {
-            id: Date.now().toString(),
-            username: username.trim(),
-            name: username.trim(),
-            role,
-        };
+        setIsLoggingIn(true);
 
-        // sementara token dummy sampai API auth siap
-        login(userData, `mock-token-${Date.now()}`);
+        const result = await login(email, password);
 
-        if (role === "admin") {
-            navigate("/admin/dashboard", { replace: true });
-            return;
+        setIsLoggingIn(false);
+
+        if (result.success) {
+            const role = useAuthStore.getState().role;
+            const userName = email.split('@')[0]; // Extract username from email
+            toast.success(`Welcome back, ${userName}!`);
+
+            if (role === 'admin') {
+                navigate("/admin/dashboard", { replace: true });
+                return;
+            }
+
+            navigate("/siswa/dashboard", { replace: true });
+        } else {
+            toast.error(result.error || "Login failed. Please check your credentials.");
         }
+    };
 
+    const updateFormData = (field, value) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
         navigate("/siswa/dashboard", { replace: true });
     };
 
@@ -155,13 +172,13 @@ export default function Login() {
                                         transition={{ duration: 0.3 }}
                                     >
                                         <div className="space-y-2">
-                                            <Label htmlFor="admin-username">Username</Label>
+                                            <Label htmlFor="admin-email">Email</Label>
                                             <Input
-                                                id="admin-username"
-                                                type="text"
-                                                placeholder="Enter your username"
-                                                value={username}
-                                                onChange={(e) => setUsername(e.target.value)}
+                                                id="admin-email"
+                                                type="email"
+                                                placeholder="admin@readora.com"
+                                                value={formData.adminEmail}
+                                                onChange={(e) => updateFormData("adminEmail", e.target.value)}
                                                 className="rounded-lg border-2 focus:border-blue-500 transition-all"
                                             />
                                         </div>
@@ -172,8 +189,8 @@ export default function Login() {
                                                     id="admin-password"
                                                     type={showPassword ? "text" : "password"}
                                                     placeholder="Enter your password"
-                                                    value={password}
-                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    value={formData.adminPassword}
+                                                    onChange={(e) => updateFormData("adminPassword", e.target.value)}
                                                     className="rounded-lg border-2 focus:border-blue-500 transition-all pr-10"
                                                 />
                                                 <button
@@ -187,10 +204,11 @@ export default function Login() {
                                         </div>
                                         <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
                                             <Button
-                                                className="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl py-6 shadow-lg shadow-blue-200 transition-all duration-300 font-semibold text-lg"
+                                                disabled={isLoggingIn}
+                                                className="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl py-6 shadow-lg shadow-blue-200 transition-all duration-300 font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                                                 onClick={() => handleLogin("admin")}
                                             >
-                                                Sign In as Admin
+                                                {isLoggingIn ? "Logging in..." : "Sign In as Admin"}
                                             </Button>
                                         </motion.div>
                                     </motion.div>
@@ -204,13 +222,13 @@ export default function Login() {
                                         transition={{ duration: 0.3 }}
                                     >
                                         <div className="space-y-2">
-                                            <Label htmlFor="student-username">Username</Label>
+                                            <Label htmlFor="student-email">Email</Label>
                                             <Input
-                                                id="student-username"
-                                                type="text"
-                                                placeholder="Enter your username"
-                                                value={username}
-                                                onChange={(e) => setUsername(e.target.value)}
+                                                id="student-email"
+                                                type="email"
+                                                placeholder="student@student.com"
+                                                value={formData.studentEmail}
+                                                onChange={(e) => updateFormData("studentEmail", e.target.value)}
                                                 className="rounded-lg border-2 focus:border-blue-500 transition-all"
                                             />
                                         </div>
@@ -221,8 +239,8 @@ export default function Login() {
                                                     id="student-password"
                                                     type={showPassword ? "text" : "password"}
                                                     placeholder="Enter your password"
-                                                    value={password}
-                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    value={formData.studentPassword}
+                                                    onChange={(e) => updateFormData("studentPassword", e.target.value)}
                                                     className="rounded-lg border-2 focus:border-blue-500 transition-all pr-10"
                                                 />
                                                 <button
@@ -236,10 +254,11 @@ export default function Login() {
                                         </div>
                                         <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
                                             <Button
-                                                className="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl py-6 shadow-lg shadow-blue-200 transition-all duration-300 font-semibold text-lg"
+                                                disabled={isLoggingIn}
+                                                className="w-full bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl py-6 shadow-lg shadow-blue-200 transition-all duration-300 font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                                                 onClick={() => handleLogin("student")}
                                             >
-                                                Sign In as Student
+                                                {isLoggingIn ? "Logging in..." : "Sign In as Student"}
                                             </Button>
                                         </motion.div>
                                     </motion.div>

@@ -1,20 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Layout } from '../../components/layout/Layout';
 import { MemberTable } from '../../components/members/MemberTable';
 import { MemberModal } from '../../components/members/MemberModal';
 import { Plus } from 'lucide-react';
-import { mockMembers as initialMembers } from '../../services/mockData';
 import { mockNotifications } from '../../services/notificationService';
 import { NotificationPanel } from '../../components/notifications/NotificationPanel';
 import { Member } from '../../types';
 import { motion } from 'motion/react';
 import { toast } from 'sonner';
+import usePerpustakaanStore from '../../stores/perpustakaan';
 
 export function MembersManagement() {
-  const [members, setMembers] = useState<Member[]>(initialMembers);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [notifications, setNotifications] = useState(mockNotifications);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  const {
+    anggota: members,
+    loading,
+    fetchAnggota,
+    addAnggota,
+    updateAnggota,
+    deleteAnggota,
+  } = usePerpustakaanStore();
+
+  // Fetch members on mount
+  useEffect(() => {
+    fetchAnggota();
+  }, []);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
@@ -32,21 +45,28 @@ export function MembersManagement() {
     toast.success('Notification deleted');
   };
 
-  const handleAddMember = (memberData: Omit<Member, 'id' | 'joinDate'>) => {
-    const newMember: Member = {
-      ...memberData,
-      id: (members.length + 1).toString(),
-      joinDate: new Date().toISOString().split('T')[0],
-    };
-    setMembers([...members, newMember]);
-    toast.success(`${memberData.name} has been added as a new member!`);
+  const handleAddMember = async (memberData: Omit<Member, 'id' | 'joinDate'>) => {
+    try {
+      await addAnggota({
+        ...memberData,
+        joinDate: new Date().toISOString().split('T')[0],
+      });
+      toast.success(`${memberData.name} has been added as a new member!`);
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error('Failed to add member. Please try again.');
+    }
   };
 
-  const handleDeleteMember = (id: string) => {
+  const handleDeleteMember = async (id: string) => {
     const member = members.find((m) => m.id === id);
     if (confirm('Are you sure you want to delete this member?')) {
-      setMembers(members.filter((member) => member.id !== id));
-      toast.success(`${member?.name} has been removed`);
+      try {
+        await deleteAnggota(id);
+        toast.success(`${member?.name} has been removed`);
+      } catch (error) {
+        toast.error('Failed to delete member. Please try again.');
+      }
     }
   };
 

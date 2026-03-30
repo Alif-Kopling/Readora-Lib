@@ -1,25 +1,42 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Layout } from '../../components/layout/Layout';
 import { BookOpen, Users, ArrowLeftRight, TrendingUp } from 'lucide-react';
-import { mockBooks, mockMembers, mockTransactions } from '../../services/mockData';
-import { mockNotifications } from '../../services/notificationService';
 import { NotificationPanel } from '../../components/notifications/NotificationPanel';
 import { DashboardStats } from '../../types';
 import { motion } from 'motion/react';
+import usePerpustakaanStore from '../../stores/perpustakaan';
 
 export function Dashboard() {
-  const [notifications, setNotifications] = useState(mockNotifications);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  
+  const { 
+    fetchBuku, 
+    fetchAnggota, 
+    fetchTransaksi,
+    buku, 
+    anggota, 
+    transaksi, 
+    loading 
+  } = usePerpustakaanStore();
+
+  // Fetch data on mount
+  useEffect(() => {
+    fetchBuku();
+    fetchAnggota();
+    fetchTransaksi();
+  }, []);
 
   const stats: DashboardStats = {
-    totalBooks: mockBooks.length,
-    availableBooks: mockBooks.filter((b) => b.status === 'Available').length,
-    totalMembers: mockMembers.length,
-    activeTransactions: mockTransactions.filter((t) => t.status === 'Borrowed' || t.status === 'Overdue').length,
+    totalBooks: buku.length,
+    availableBooks: buku.filter((b) => b.status === 'Available').length,
+    totalMembers: anggota.length,
+    activeTransactions: transaksi.filter((t) => t.status === 'Borrowed' || t.status === 'Overdue').length,
   };
 
-  const recentTransactions = mockTransactions.slice(0, 5);
+  const recentTransactions = transaksi.slice(0, 5);
 
+  // Mock notifications for now (can be replaced with real notification API later)
+  const [notifications, setNotifications] = useState([]);
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   const handleMarkAsRead = (id: string) => {
@@ -33,6 +50,20 @@ export function Dashboard() {
   const handleDeleteNotification = (id: string) => {
     setNotifications(notifications.filter((n) => n.id !== id));
   };
+
+  if (loading && buku.length === 0) {
+    return (
+      <Layout
+        title="Dashboard"
+        notificationCount={unreadCount}
+        onNotificationClick={() => setIsNotificationOpen(true)}
+      >
+        <div className="flex items-center justify-center h-64">
+          <div className="text-gray-500">Loading dashboard data...</div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <>
@@ -80,7 +111,7 @@ export function Dashboard() {
               </div>
             </div>
             <p className="text-xs text-gray-500 mt-3">
-              {Math.round((stats.availableBooks / stats.totalBooks) * 100)}% of total
+              {stats.totalBooks > 0 ? Math.round((stats.availableBooks / stats.totalBooks) * 100) : 0}% of total
             </p>
           </motion.div>
 
@@ -100,7 +131,7 @@ export function Dashboard() {
               </div>
             </div>
             <p className="text-xs text-gray-500 mt-3">
-              {mockMembers.filter((m) => m.status === 'Active').length} active members
+              {anggota.filter((m) => m.status === 'Active').length} active members
             </p>
           </motion.div>
 
@@ -120,7 +151,7 @@ export function Dashboard() {
               </div>
             </div>
             <p className="text-xs text-orange-600 mt-3">
-              {mockTransactions.filter((t) => t.status === 'Overdue').length} overdue
+              {transaksi.filter((t) => t.status === 'Overdue').length} overdue
             </p>
           </motion.div>
         </div>
@@ -135,36 +166,40 @@ export function Dashboard() {
             className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
           >
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Transactions</h3>
-            <div className="space-y-4">
-              {recentTransactions.map((transaction, index) => (
-                <motion.div
-                  key={transaction.id}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
-                  className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0"
-                >
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{transaction.bookTitle}</p>
-                    <p className="text-xs text-gray-500">{transaction.memberName}</p>
-                  </div>
-                  <span
-                    className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                      transaction.status === 'Returned'
-                        ? 'bg-green-100 text-green-800'
-                        : transaction.status === 'Overdue'
-                        ? 'bg-red-100 text-red-800'
-                        : 'bg-blue-100 text-blue-800'
-                    }`}
+            {recentTransactions.length > 0 ? (
+              <div className="space-y-4">
+                {recentTransactions.map((transaction, index) => (
+                  <motion.div
+                    key={transaction.id}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.6 + index * 0.1 }}
+                    className="flex items-center justify-between py-3 border-b border-gray-100 last:border-0"
                   >
-                    {transaction.status}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{transaction.bookTitle}</p>
+                      <p className="text-xs text-gray-500">{transaction.memberName}</p>
+                    </div>
+                    <span
+                      className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                        transaction.status === 'Returned'
+                          ? 'bg-green-100 text-green-800'
+                          : transaction.status === 'Overdue'
+                          ? 'bg-red-100 text-red-800'
+                          : 'bg-blue-100 text-blue-800'
+                      }`}
+                    >
+                      {transaction.status}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-sm">No transactions yet</p>
+            )}
           </motion.div>
 
-          {/* Popular Books */}
+          {/* Popular Categories */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -172,25 +207,32 @@ export function Dashboard() {
             className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
           >
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Popular Categories</h3>
-            <div className="space-y-3">
-              {['Fiction', 'Fantasy', 'Science Fiction', 'Non-Fiction', 'Romance'].map((category, index) => (
-                <motion.div
-                  key={category}
-                  initial={{ opacity: 0, x: 10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
-                  className="flex items-center justify-between"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center text-white text-xs font-medium">
-                      {category.substring(0, 2).toUpperCase()}
-                    </div>
-                    <span className="text-sm font-medium text-gray-900">{category}</span>
-                  </div>
-                  <span className="text-sm text-gray-500">{5 - index} books</span>
-                </motion.div>
-              ))}
-            </div>
+            {buku.length > 0 ? (
+              <div className="space-y-3">
+                {Array.from(new Set(buku.map((b) => b.category))).slice(0, 5).map((category, index) => {
+                  const count = buku.filter((b) => b.category === category).length;
+                  return (
+                    <motion.div
+                      key={category}
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.6 + index * 0.1 }}
+                      className="flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center text-white text-xs font-medium">
+                          {category.substring(0, 2).toUpperCase()}
+                        </div>
+                        <span className="text-sm font-medium text-gray-900">{category}</span>
+                      </div>
+                      <span className="text-sm text-gray-500">{count} books</span>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-sm">No books available</p>
+            )}
           </motion.div>
         </div>
       </Layout>
