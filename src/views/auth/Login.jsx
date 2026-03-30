@@ -55,6 +55,7 @@ export default function Login() {
 
     const updateFormData = (field, value) => {
         setFormData(prev => ({ ...prev, [field]: value }));
+        navigate("/siswa/dashboard", { replace: true });
     };
 
     return (

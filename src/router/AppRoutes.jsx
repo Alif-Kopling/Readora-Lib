@@ -9,6 +9,10 @@ import { MembersManagement } from "../views/admin/MembersManagement";
 import { Transactions } from "../views/admin/Transactions";
 import { Settings } from "../views/admin/Settings";
 import { StudentDashboard } from "../views/student/Dashboard";
+import SiswaLayout from "../components/layout/SiswaLayout";
+import DashboardSiswa from "../views/siswa/Dashboard";
+import PinjamBuku from "../views/siswa/PinjamBuku";
+import Riwayat from "../views/siswa/Riwayat";
 
 function RequireAdmin({ children }) {
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -26,6 +30,7 @@ function RequireAdmin({ children }) {
 }
 
 function RequireStudent({ children }) {
+function RequireSiswa({ children }) {
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const role = useAuthStore((state) => state.role);
 
@@ -45,6 +50,7 @@ export default function AppRoutes() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route
                     path="/admin/dashboard"
@@ -94,6 +100,21 @@ export default function AppRoutes() {
                         </RequireStudent>
                     }
                 />
+
+                {/* Siswa Routes */}
+                <Route
+                    path="/siswa"
+                    element={
+                        <RequireSiswa>
+                            <SiswaLayout />
+                        </RequireSiswa>
+                    }
+                >
+                    <Route index element={<Navigate to="/siswa/dashboard" replace />} />
+                    <Route path="dashboard" element={<DashboardSiswa />} />
+                    <Route path="pinjam" element={<PinjamBuku />} />
+                    <Route path="riwayat" element={<Riwayat />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );
